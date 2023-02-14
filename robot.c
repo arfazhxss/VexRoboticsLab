@@ -1,29 +1,31 @@
 const int speed = 125;
 
 // STATES FOR THE MOTOR, OFF IN GENERAL, ON OTHERWISE
-typedef enum
-{
-    MOTOR_OFF = 0,
-    MOTOR_ON
-} state;
-
-state offState()
-{
-    if (SensorValue(button1) == 1)
-    {
-        motor[motor1] = speed;
-        return (MOTOR_ON);
-    }
-    else
-    {
-        return (MOTOR_OFF);
-    }
-}
-
-// state OnState()
+// typedef enum
 // {
-//     if ()
+//     MOTOR_OFF = 0,
+//     MOTOR_ON
+// } state;
+
+// state offState()
+// {
+//     if (SensorValue(button1) == 1)
+//     {
+//         motor[motor1] = speed;
+//         return (MOTOR_ON);
+//     }
+//     else
+//     {
+//         return (MOTOR_OFF);
+//     }
 // }
+
+// // state OnState()
+// // {
+// //     if ()
+// // }
+
+void 
 
 task main()
 {
