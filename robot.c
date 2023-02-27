@@ -12,16 +12,29 @@
 //
 //
 
+int motorSpeed = 50;														// (UNIT) centimeter, cm
+
+void moveForwardOneMeter() {
+	motor[leftMotor] = motorSpeed;
+	motor[rightMotor] = motorSpeed+5;							// calibrating with both motor speed, may differ by weight and circumstance, subject to change
+	wait1Msec(2000);
+	motor[leftMotor] = 0;
+	motor[rightMotor] = 0;
+	wait1Msec(1000);
+	/* motorSpeed=-15;
+	motor[leftMotor] = motorSpeed;
+	motor[rightMotor] = motorSpeed-10;
+	wait1Msec(3000); */
+
+}
+
 task main () {
 	while (1==1) {
-		if (SensorValue(buttonToMove) == 0) {
-			//while (1==1) {
-				motor[leftMotor] = 127;
-				motor[rightMotor] = 127;
-			//}
+		if (SensorValue[buttonToMove] == 0) {
+			moveForwardOneMeter();
 		}
 		else if (SensorValue(buttonToTurn) == 0) {
-			motor[leftMotor] = 127;
+			motor[leftMotor] = motorSpeed;
 			motor[rightMotor] = 0;
 		}
 		else {
