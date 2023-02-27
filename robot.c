@@ -52,7 +52,7 @@ task main () {
         else if (SensorValue(buttonToTurn) == 0) {    // should be ... documentation
             turnRight();                              // function, run - wait - run - stop
 		    }
-		    else {                                        // default mode
+        else {                                        // default mode
             motor[leftMotor] = 0;
             motor[rightMotor] = 0;
         }
