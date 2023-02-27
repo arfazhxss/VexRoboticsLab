@@ -2,5 +2,5 @@
 
 git add . && \
 git add -u && \
-git commit -m $'Routine Commit\n@arfazhxss '"$(date)"$ && \
+git commit -m $'Routine Commit\nby @arfazhxss on'"$(date)" && \
 git push origin HEAD
