@@ -4,9 +4,7 @@ This is a repository for VexRobotics robotC (.c) scripts for UVic ENGR 120 Desig
 This repository is still in development.
 
 Files:
-.
-.
-.
+
     0\ Resources            Past Resources
         legacy_code
         tut
