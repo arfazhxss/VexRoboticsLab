@@ -1,6 +1,6 @@
 # robotC
 
-This is a repository for VexRobotics robotC (.c) scripts for UVic ENGR 120 Design Class for Spring 2023
+This is a repository for VexRobotics robotC (.c) scripts for UVic ENGR 120 Design And Communication / ENGR 121 Design Class for Spring 2023
 This repository is still in development.
 
     Files:
