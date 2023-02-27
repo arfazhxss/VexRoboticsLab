@@ -19,7 +19,7 @@ This repository is still in development.
     .   .   .
     .   .   .
     .   .   .
-    .   .   .......X
+    .   .   ........X
     .   .
     .   .
     .   .
