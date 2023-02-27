@@ -14,12 +14,12 @@ Files:
     route.sh                Bash Script for all .git repository, for any Mac and Linux Builds
 
     1\ Scripts
-        milestone_one.c     RobotC Script For Mechanical Test
-                            (Paisley Kerstens, Aleksia Loewen, Arfaz Hussain)
-        .
-        .
-        .
-        .......
+    .   milestone_one.c     RobotC Script For Mechanical Test
+    .                       (Paisley Kerstens, Aleksia Loewen, Arfaz Hussain)
+    .   .
+    .   .
+    .   .
+    .   .......
     .
     .
     .
