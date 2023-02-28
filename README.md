@@ -5,7 +5,7 @@ This repository is still in development.
 
     Files:
     .
-    .   0\ Resources            Past Resources
+    .   0\ Resources                            Past Resources
     .       legacy_code
     .       tut
     .       ...
