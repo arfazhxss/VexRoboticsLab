@@ -21,9 +21,9 @@ as described in the ENGR 120/121 Lab 3 description.
 const   int IR_SENSOR_THRESHOLD = 1000;
 
 // Type of variable that will store the state values.
-enum T_system_state
+enum programState
 {
-  STATE0 = 0,   // Replace names with something more descriptive in in your project code.
+  LookingForSignal = 0,   // Replace names with something more descriptive in in your project code.
   STATE1
 };
 
@@ -41,18 +41,18 @@ void init_light_status()
 task main()
 {
   // System state variable
-  T_system_state system_state;
+  programState currState;
 
   // Initialize lighting status.
   init_light_status();
 
   // Initialize system state
-  system_state  = STATE0;
+  currState  = STATE0;
 
   // Endless loop
-  while (true)
+  while (1==1)
   {
-    switch(system_state)
+    switch(currState)
     {
       // Management of system when in state 0
       case(STATE0):
@@ -66,7 +66,7 @@ task main()
         if (SensorValue[InfraCollector] < IR_SENSOR_THRESHOLD)
         {
           // IR Light detected: Switch system state.
-          system_state = STATE1;
+          currState = STATE1;
         }
         break;
 
@@ -81,7 +81,7 @@ task main()
     	if (SensorValue(InfraCollector) > IR_SENSOR_THRESHOLD)
     	{
           // Switch system state.
-          system_state = STATE0;
+          currState = STATE0;
     	}
     	break;
 
