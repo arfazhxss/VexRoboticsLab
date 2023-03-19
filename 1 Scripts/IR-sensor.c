@@ -31,76 +31,63 @@ enum programState
   FoundSignal = 1
 };
 
-int motorSpeed = 50;
+const int motorSpeed = 50;
 const int OFF = 0;                // Light Source ON
 const int ON = 1;                 // Light Source OFF
 
 void SourceDetectionSignal ()
 {
-  SensorValue(RedLED) = OFF;
-  wait1Msec(500);
-  SensorValue(RedLED) = ON;
-  wait1Msec(500);
-  SensorValue(RedLED) = OFF;
-  wait1Msec(500);
-  SensorValue(RedLED) = ON;
-  wait1Msec(500);
-  SensorValue(RedLED) = OFF;
+    SensorValue(RedLED) = OFF;
+    wait1Msec(500);
+    SensorValue(RedLED) = ON;
+    wait1Msec(500);
+    SensorValue(RedLED) = OFF;
+    wait1Msec(500);
+    SensorValue(RedLED) = ON;
+    wait1Msec(500);
+    SensorValue(RedLED) = OFF;
 }
 
 void moveStraight()
 {
-  motor[leftMotor] = motorSpeed;
-  motor[rightMotor] = motorSpeed + 5;
-  wait1Msec(2500);
+    motor[leftMotor] = motorSpeed;
+    motor[rightMotor] = motorSpeed + 5;
+    wait1Msec(2500);
 }
 
 void turnRight()
 {
-  motor[leftMotor] = motorSpeed;
-  motor[rightMotor] = 0;
-  wait1Msec(1700);
+    motor[leftMotor] = motorSpeed;
+    motor[rightMotor] = 0;
+    wait1Msec(1700);
 }
 
-task main()
-{
-  // System state variable
-  programState currState;
+task main() {
+    programState currState = LookingForSignal;
+    SourceDetectionSignal();
 
-  SourceDetectionSignal();
+    while (1==1) {
+        switch (currState) {
+            case (LookingForSignal):
+                SensorValue(RedLED) = OFF;
 
-  currState = LookingForSignal;
+                /* When an infrared beam from the IR LED
+                 * hits the phototransistor, the InfraCollector port
+                 * should go above the IR_SENSOR_THRESHOLD value.
+                 */
+                if (SensorValue[InfraCollector] < IR_SENSOR_THRESHOLD) {currState = FoundSignal;}
+                break;
+            case (FoundSignal):
+                SensorValue(RedLED) = ON;
+                /*     When the infrared beam from the IR LED 
+                 *     to the phototransistor is blocked, 
+                 *     the InfraCollector port should go below 
+                 *     the IR_SENSOR_THRESHOLD value.
+                 */
+                if (SensorValue(InfraCollector) > IR_SENSOR_THRESHOLD) {currState = MovingToTarget;}
+                break;
 
-  while (1==1)
-  {
-    switch (currState)
-    {
-    case (LookingForSignal):
-      SensorValue(RedLED) = OFF;
-
-      /* When an infrared beam from the IR LED
-       * hits the phototransistor, the InfraCollector port
-       * should go above the IR_SENSOR_THRESHOLD value.
-       */
-      if (SensorValue[InfraCollector] < IR_SENSOR_THRESHOLD) {currState = FoundSignal;}
-      break;
-
-    case (FoundSignal):
-
-      // Light LED when in this state
-      SensorValue(RedLED) = ON;
-      
-      /*     When the infrared beam from the IR LED 
-       *     to the phototransistor is blocked, 
-       *     the InfraCollector port should go below 
-       *     the IR_SENSOR_THRESHOLD value.
-       */
-      if (SensorValue(InfraCollector) > IR_SENSOR_THRESHOLD) {currState = MovingToTarget;}
-      break;
-
-    default: // We should never be in this state.
-
-    } // switch(system_state)
-
-  } // while(true)
+            default: // We should never be in this state.
+        }
+    }
 }
