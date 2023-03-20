@@ -59,7 +59,10 @@ void NoSourceDetectionSignal()
         SensorValue(RedLED) = ON;
         wait1Msec(1000);
         SensorValue(RedLED) = OFF;
+        wait1Msec(1000);
+        if (SensorValue[buttonToMove]==0) {break;}
     }
+    return;
 }
 
 void moveBack()
@@ -70,8 +73,8 @@ void moveBack()
 
 void moveTo()
 {
-    motor[rightMotor] = rightMotorSpeed;
-    motor[leftMotor] = -leftMotorSpeed;
+    motor[rightMotor] = rightMotorSpeed+10;
+    motor[leftMotor] = -leftMotorSpeed-10;
 }
 
 void moveAround()
@@ -101,7 +104,7 @@ void lookingForSource()
             moveBack();
         }
         // if (SensorValue[infraC] > thresholdSensorValue)
-        if (SensorValue[SonarIn] == 3)
+        if (SensorValue[SonarIn] == -1)
         {
             SensorValue(RedLED) = ON;
             return;
@@ -116,19 +119,22 @@ void moveToSource()
         if (SensorValue[buttonToTurn] == 0) {Stop();break;}
         moveTo();
     }
+    if (SensorValue[SonarIn]<5) {Stop();}
     return;
 }
 
 task main()
 {
     SourceDetectionSignal();
-    if (SensorValue[buttonToMove] == 0)
-    {
-        while(1==1)
+    while (1==1) {    
+        if (SensorValue[buttonToMove] == 0)
         {
-            lookingForSource();
-            moveToSource();
-            NoSourceDetectionSignal();
+            while(1==1)
+            {
+                lookingForSource();
+                moveToSource();
+                NoSourceDetectionSignal();
+            }
         }
     }
 }
