@@ -96,10 +96,15 @@ void lookingForSource()
     while (1 == 1)
     {
         if (SensorValue[buttonToTurn] == 0) {Stop();break;}
-        if (time1[T1]>=5000) {
+        if (time1[T1]>=2000) {
             clearTimer(T1);
-            while (time1[T1]<=2000) {
+            while (time1[T1]<=200) {
                 moveTo();
+                if ((SensorValue[SonarIn] <= 20) && (SensorValue[SonarIn] != -1))
+                {
+                    moveBack();
+                    wait1Msec(50);
+                }
             }
             clearTimer(T1);
         }
@@ -107,12 +112,11 @@ void lookingForSource()
         {
             moveAround();
         }
-        else if ((SensorValue[SonarIn] <= 10)&&(SensorValue[SonarIn] != -1))
+        else if ((SensorValue[SonarIn] <= 20)&&(SensorValue[SonarIn] != -1))
         {
             moveBack();
         }
         // if (SensorValue[infraC] > thresholdSensorValue)
-        // if (SensorValue[SonarIn] == 15)
         // {
         //     SensorValue(RedLED) = ON;
         //     return;
