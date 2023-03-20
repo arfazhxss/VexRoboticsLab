@@ -13,28 +13,31 @@
  *
  * Electrical Test 01: IR Sensor Test
  *
- * Breadboard Connected To: Digital Port 1 (LED Light Signal)
- *                          Analog Port 7 (PhotoTransistor)
+ * Breadboard Connected To: Digital Port X (LED Light Signal)
+ *                          Analog Port X (PhotoTransistor)
  *
  *
  *************************************************************************/
 
 // Threshold of value read from phototransistor circuit.
-const int thresholdSensorValue = 1000; // My Idea --> if robot finds a value greater than the thresh
+// const int thresholdSensorValue = 1000; // My Idea --> if robot finds a value greater than the thresh
 
-enum programState // States in our Test
-{
-    LookingForSignal,
-    FoundSignal,
-    MoveToTheSignal
-};
+// enum programState // States in our Test
+// {
+//     LookingForSource,
+//     FoundSource,
+//     MoveToSource,
+//     stopTest
+// };
 
-int motorSpeed = 50; // Motor Speed
-int OFF = 0;         // Light Source ON
-int ON = 1;          // Light Source OFF
+const int motorSpeed = 30;
+int rightMotorSpeed = motorSpeed; // Motor Speed
+int leftMotorSpeed = motorSpeed + 5;
 
+int OFF = 0; // Light Source ON
+int ON = 1;  // Light Source OFF
 
-void SourceDetectionSignal ()
+void SourceDetectionSignal()
 {
     SensorValue(RedLED) = ON;
     wait1Msec(350);
@@ -45,46 +48,87 @@ void SourceDetectionSignal ()
     SensorValue(RedLED) = OFF;
 }
 
+void NoSourceDetectionSignal()
+{
+    while (1 == 1)
+    {
+        SensorValue(RedLED) = ON;
+        wait1Msec(1000);
+        SensorValue(RedLED) = OFF;
+        wait1Msec(1000);
+        SensorValue(RedLED) = ON;
+        wait1Msec(1000);
+        SensorValue(RedLED) = OFF;
+    }
+}
+
+void moveBack()
+{
+    motor[rightMotor] = -rightMotorSpeed;
+    motor[leftMotor] = leftMotorSpeed;
+}
+
+void moveTo()
+{
+    motor[rightMotor] = rightMotorSpeed;
+    motor[leftMotor] = -leftMotorSpeed;
+}
+
+void moveAround()
+{
+    motor[leftMotor] = rightMotorSpeed;
+    motor[rightMotor] = leftMotorSpeed;
+}
+
+void Stop()
+{
+    motor[leftMotor] = 0;
+    motor[rightMotor] = 0;
+}
+
+void lookingForSource()
+{
+    SensorValue(RedLED) = OFF;
+    while (1 == 1)
+    {
+        if (SensorValue[buttonToTurn] == 0) {Stop();break;}
+        if (SensorValue[SonarIn] > 10)
+        {
+            moveAround();
+        }
+        else if (SensorValue[SonarIn] <= 10)
+        {
+            moveBack();
+        }
+        // if (SensorValue[infraC] > thresholdSensorValue)
+        if (SensorValue[SonarIn] == 3)
+        {
+            SensorValue(RedLED) = ON;
+            return;
+        }
+    }
+}
+
+void moveToSource()
+{
+    while (SensorValue[SonarIn]>5)
+    {
+        if (SensorValue[buttonToTurn] == 0) {Stop();break;}
+        moveTo();
+    }
+    return;
+}
 
 task main()
 {
-    programState currState = LookingForSignal;
     SourceDetectionSignal();
-    while (1 == 1)
+    if (SensorValue[buttonToMove] == 0)
     {
-        if (SensorValue[buttonToMove] == 0)
+        while(1==1)
         {
-            while (1 == 1)
-            {
-                switch (currState)
-                {
-                case (LookingForSignal):
-                    SensorValue(RedLED) = OFF;
-                    while (SensorValue[SonarIn]>10)
-                    {
-                        // while ((SensorValue(SonarIn)<0)&&(SensorValue(SonarIn)>10)) {
-                        motor[leftMotor] = motorSpeed;
-                        motor[rightMotor] = motorSpeed+5;
-                        wait1Msec(5);
-                    }
-                    if (SensorValue[infraC] > thresholdSensorValue)
-                    {
-                        currState = FoundSignal;
-                        SensorValue(RedLED) = ON;
-                        break;
-                    }
-
-                case (FoundSignal):
-                    SensorValue(RedLED) = ON;
-                default: // We should never be in this state.
-                }
-                if (SensorValue[SonarIn] == -1)
-                {
-                    motor[leftMotor] = 0;
-                    motor[rightMotor] = 0;
-                    break;
-                }
-            }
+            lookingForSource();
+            moveToSource();
+            NoSourceDetectionSignal();
         }
     }
 }
