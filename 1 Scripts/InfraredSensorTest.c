@@ -91,24 +91,32 @@ void Stop()
 
 void lookingForSource()
 {
+    clearTimer(T1);
     SensorValue(RedLED) = OFF;
     while (1 == 1)
     {
         if (SensorValue[buttonToTurn] == 0) {Stop();break;}
-        if (SensorValue[SonarIn] > 10)
+        if (time1[T1]>=5000) {
+            clearTimer(T1);
+            while (time1[T1]<=2000) {
+                moveTo();
+            }
+            clearTimer(T1);
+        }
+        else if (SensorValue[SonarIn] > 10)
         {
             moveAround();
         }
-        else if (SensorValue[SonarIn] <= 10)
+        else if ((SensorValue[SonarIn] <= 10)&&(SensorValue[SonarIn] != -1))
         {
             moveBack();
         }
         // if (SensorValue[infraC] > thresholdSensorValue)
-        if (SensorValue[SonarIn] == -1)
-        {
-            SensorValue(RedLED) = ON;
-            return;
-        }
+        // if (SensorValue[SonarIn] == 15)
+        // {
+        //     SensorValue(RedLED) = ON;
+        //     return;
+        // }
     }
 }
 
