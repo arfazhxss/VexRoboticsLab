@@ -26,14 +26,13 @@ task main() {
         {
             while (1 == 1)
             {
-                motor[leftMotor] = 15;
-                motor[rightMotor] = 15;
+                motor[leftMotor] = 55;
+                motor[rightMotor] = 50;
                 if (SensorValue[buttonToTurn] == 0) {
                     motor[leftMotor] = 0;
                     motor[rightMotor] = 0;
                     break;
                 }
-            
             }
         }
     }
