@@ -1,6 +1,8 @@
-#pragma config(Sensor, in1,    InfraCollector, sensorReflection)
+#pragma config(Sensor, in1,    infraC,         sensorReflection)
+#pragma config(Sensor, in2,    InfraC2,        sensorAnalog)
 #pragma config(Sensor, dgtl1,  RedLED,         sensorDigitalOut)
 #pragma config(Sensor, dgtl4,  buttonToMove,   sensorDigitalIn)
+#pragma config(Sensor, dgtl6,  SonarIn,        sensorSONAR_cm)
 #pragma config(Sensor, dgtl11, buttonToTurn,   sensorDigitalIn)
 #pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop)
@@ -23,64 +25,58 @@ const int IR_SENSOR_THRESHOLD = 1000;
 enum programState
 {
   LookingForSignal = 0,
-  FoundSignal = 1
+  FoundSignal = 1,
+  MoveToTheSignal = 2
 };
 
-const int motorSpeed = 25;
-const int OFF = 0;                // Light Source ON
-const int ON = 1;                 // Light Source OFF
+int motorSpeed = 25;
+int OFF = 0;                // Light Source ON
+int ON = 1;                 // Light Source OFF
+
 /*
 void SourceDetectionSignal ()
 {
     SensorValue(RedLED) = OFF;
-    wait1Msec(500);
+    wait1Msec(1000);
     SensorValue(RedLED) = ON;
-    wait1Msec(500);
+    wait1Msec(1000);
     SensorValue(RedLED) = OFF;
-    wait1Msec(500);
+    wait1Msec(1000);
     SensorValue(RedLED) = ON;
-    wait1Msec(500);
+    wait1Msec(1000);
     SensorValue(RedLED) = OFF;
-}
-*/
-/*
-void moveForward() {
-
-    motor[leftMotor] = motorSpeed;
-    motor[rightMotor] = motorSpeed+5;                // calibrating with both motor speed
-    wait1Msec(2500);                                 // may differ by weight and circumstance, subject to change
-                               // legacy test end
-
 }
 */
 
 task main() {
     programState currState = LookingForSignal;
     //SourceDetectionSignal();
+    if (SensorValue[buttonToMove] == 0) {
+        while (1==1) {
+            switch (currState) {
+                case (LookingForSignal):
+                    SensorValue(RedLED) = ON;
+                    while (SensorValue(infraC)<IR_SENSOR_THRESHOLD) {
+                    //while ((SensorValue(SonarIn)<0)&&(SensorValue(SonarIn)>10)) {
+                        motor[leftMotor] = motorSpeed;
+                        motor[rightMotor] = motorSpeed;
+                        wait1Msec(10);
+                        if (SensorValue[infraC] > IR_SENSOR_THRESHOLD) {
+                            currState = FoundSignal;
+                            SensorValue(RedLED) = OFF;
+                            break;
+                        }
+                    }
 
-    while (1==1) {
-    	if (SensorValue[buttonToMove] == 0) {
-        switch (currState) {
-            case (LookingForSignal):
-                motor[leftMotor] = motorSpeed;
-                motor[rightMotor] = motorSpeed;
-                wait1Msec(50);
-                SensorValue(RedLED) = OFF;
-								//if (SensorValue[buttonToTurn] == 0) {motor[leftMotor]=0;motor[rightMotor]=0;}
-                if (SensorValue[InfraCollector] < IR_SENSOR_THRESHOLD) {
-                	currState = FoundSignal;
-                	SensorValue(RedLED) = ON;
-                }
-                break;
-            case (FoundSignal):
-                SensorValue(RedLED) = ON;
-                motor[leftMotor] = 75;
-                motor[rightMotor] = 80;
-                if (SensorValue[buttonToTurn] == 0) {motor[leftMotor]=0;}
-                if (SensorValue(InfraCollector) > IR_SENSOR_THRESHOLD) {currState = LookingForSignal;}
-                break;
-            default: // We should never be in this state.
+                case (FoundSignal):
+                    SensorValue(RedLED) = ON;
+                    motor[leftMotor] = 75;
+                    motor[rightMotor] = 80;
+                    if (SensorValue[buttonToTurn] == 0) {motor[leftMotor]=0;}
+                    if (SensorValue(infraC) < IR_SENSOR_THRESHOLD) {currState = LookingForSignal;}
+                    break;
+                default: // We should never be in this state.
+            }
         }
-      }
     }
 }
