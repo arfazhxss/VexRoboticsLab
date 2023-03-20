@@ -96,11 +96,11 @@ void lookingForSource()
     while (1 == 1)
     {
         if (SensorValue[buttonToTurn] == 0) {Stop();break;}
-        if (time1[T1]>=2000) {
+        if (time1[T1]>=5000) {
             clearTimer(T1);
             while (time1[T1]<=200) {
                 moveTo();
-                if ((SensorValue[SonarIn] <= 20) && (SensorValue[SonarIn] != -1))
+                if ((SensorValue[SonarIn] <= 50) && (SensorValue[SonarIn] != -1))
                 {
                     moveBack();
                     wait1Msec(50);
@@ -112,7 +112,7 @@ void lookingForSource()
         {
             moveAround();
         }
-        else if ((SensorValue[SonarIn] <= 20)&&(SensorValue[SonarIn] != -1))
+        else if ((SensorValue[SonarIn] <= 50)&&(SensorValue[SonarIn] != -1))
         {
             moveBack();
         }
