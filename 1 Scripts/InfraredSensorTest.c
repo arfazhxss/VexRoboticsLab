@@ -20,16 +20,16 @@
  *************************************************************************/
 
 // Threshold of value read from phototransistor circuit.
-const int IR_SENSOR_THRESHOLD = 1000;
+const int thresholdSensorValue = 1000;       // My Idea --> if robot finds a value greater than the thresh
 
-enum programState
+enum programState           // States in our Test
 {
-  LookingForSignal = 0,
-  FoundSignal = 1,
-  MoveToTheSignal = 2
+  LookingForSignal,
+  FoundSignal,
+  MoveToTheSignal
 };
 
-int motorSpeed = 25;
+int motorSpeed = 25;        // Motor Speed 
 int OFF = 0;                // Light Source ON
 int ON = 1;                 // Light Source OFF
 
@@ -56,26 +56,26 @@ task main() {
             switch (currState) {
                 case (LookingForSignal):
                     SensorValue(RedLED) = ON;
-                    while (SensorValue(infraC)<IR_SENSOR_THRESHOLD) {
+                    while (SensorValue(infraC)<thresholdSensorValue) {
                     //while ((SensorValue(SonarIn)<0)&&(SensorValue(SonarIn)>10)) {
                         motor[leftMotor] = motorSpeed;
                         motor[rightMotor] = motorSpeed;
                         wait1Msec(10);
-                        if (SensorValue[infraC] > IR_SENSOR_THRESHOLD) {
+                        if (SensorValue[infraC] > thresholdSensorValue) {
                             currState = FoundSignal;
                             SensorValue(RedLED) = OFF;
                             break;
                         }
                     }
 
-                case (FoundSignal):
-                    SensorValue(RedLED) = ON;
-                    motor[leftMotor] = 75;
-                    motor[rightMotor] = 80;
-                    if (SensorValue[buttonToTurn] == 0) {motor[leftMotor]=0;}
-                    if (SensorValue(infraC) < IR_SENSOR_THRESHOLD) {currState = LookingForSignal;}
-                    break;
-                default: // We should never be in this state.
+                    // case (FoundSignal):
+                    //     SensorValue(RedLED) = ON;
+                    //     motor[leftMotor] = 75;
+                    //     motor[rightMotor] = 80;
+                    //     if (SensorValue[buttonToTurn] == 0) {motor[leftMotor]=0;}
+                    //     if (SensorValue(infraC) < thresholdSensorValue) {currState = LookingForSignal;}
+                    //     break;
+                    // default: // We should never be in this state.
             }
         }
     }
