@@ -1,4 +1,3 @@
-#pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, in1,    infraC,         sensorReflection)
 #pragma config(Sensor, dgtl1,  RedLED,         sensorDigitalOut)
 #pragma config(Sensor, dgtl4,  buttonToMove,   sensorDigitalIn)
@@ -30,7 +29,7 @@ int leftMotorSpeed = motorSpeed + 5;
 int OFF = 0; // Light Source ON
 int ON = 1;  // Light Source OFF
 
-void firstSignalTest() 
+void firstSignalTest()
 {
     SensorValue(RedLED) = ON;
     wait1Msec(1000);
