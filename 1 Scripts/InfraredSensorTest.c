@@ -99,6 +99,16 @@ void moveAround()
     motor[rightMotor] = leftMotorSpeed;
 }
 
+void moveAroundBack()
+{
+	clearTimer(T1);
+	while (time1[T1] <= 200)
+  {
+		moveAround();
+  }
+
+}
+
 void Stop()
 {
     motor[leftMotor] = 0;
@@ -143,7 +153,8 @@ void lookingForSource()
         }
         else if ((SensorValue[SonarIn] <= 50) && (SensorValue[SonarIn] != -1))
         {
-            moveBack();
+            moveAroundBack();
+            //moveBack();
         }
     }
     return;
@@ -181,7 +192,8 @@ task main()
                 // NoSourceDetectionSignal();
                 lookingForSource();
                 moveToSource();
-                NoSourceDetectionSignal();
+                //SourceDetectionSignal();
+                //NoSourceDetectionSignal();
             }
         }
     }
