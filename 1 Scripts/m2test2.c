@@ -15,37 +15,46 @@ int rightMotorSpeed = motorSpeed; // Motor Speed
 int leftMotorSpeed = motorSpeed + 5;
 
 int OFF = 0; // Light Source ON
-int ON = 1;	 // Light Source OFF
+int ON = 1;  // Light Source OFF
 
 // bool stopped = false;
 
 void Stop()
 {
-	motor[leftMotor] = 0;
-	motor[rightMotor] = 0;
+    motor[leftMotor] = 0;
+    motor[rightMotor] = 0;
 }
 void moveAround()
 {
-	motor[leftMotor] = rightMotorSpeed;
-	motor[rightMotor] = -leftMotorSpeed;
+    motor[leftMotor] = rightMotorSpeed;
+    motor[rightMotor] = leftMotorSpeed;
 }
 task main()
 {
-	while (1 == 1)
-	{
-		if (SensorValue[StartButton] == 0)
-		{
-			while (1==1)
-			{
-				moveAround();
-				if (SensorValue[infraC] < thresholdSensorValue)
-				{
-					Stop();
-					// AllOn()
-					SensorValue(RedLED) = ON;
-					return;
-				}
-			}
-		}
-	}
+    while (1 == 1)
+    {
+        SensorValue(RedLED) = ON;
+        //SensorValue(GreenLED) = ON;
+        if (SensorValue[StartButton] == 0)
+        {
+        		SensorValue(RedLED) = OFF;
+            int sensorValue1 = 0;
+            int sensorValue2 = 0;
+            while (1 == 1)
+            {
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(50);
+                sensorValue2 = SensorValue[infraC];
+                if ((sensorValue1 < 200)||(sensorValue2 < 200))
+                {
+                    SensorValue(RedLED) = ON;
+                    //break;
+                }
+                else
+                {
+                    SensorValue(RedLED) = OFF;
+                }
+            }
+        }
+    }
 }
