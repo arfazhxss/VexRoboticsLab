@@ -37,7 +37,7 @@ task main()
         //SensorValue(GreenLED) = ON;
         if (SensorValue[StartButton] == 0)
         {
-        		SensorValue(RedLED) = OFF;
+        		SensorValue(RedLED) = OFF ;
             int sensorValue1 = 0;
             int sensorValue2 = 0;
             while (1 == 1)

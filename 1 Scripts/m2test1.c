@@ -12,7 +12,7 @@ const int thresholdSensorValue = 1000; // My Idea --> if robot finds a value gre
 
 const int motorSpeed = 50;
 int rightMotorSpeed = motorSpeed; // Motor Speed
-int leftMotorSpeed = motorSpeed + 5;
+int leftMotorSpeed = motorSpeed;
 
 int OFF = 0; // Light Source ON
 int ON = 1;	 // Light Source OFF
