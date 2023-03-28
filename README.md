@@ -1,6 +1,8 @@
     .   ENGR120 Design 2: VecRobotics 
     .   
     .   Paisley Kerstens, Aleksia Loewen, Arfaz Hussain
+    .   
+    .   FILENAME/DIRECTORY                          FILE DESCRIPTION
     .
     .
     .   0\ Resources                                Past Resources
