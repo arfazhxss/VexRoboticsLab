@@ -35,13 +35,20 @@ void moveTo()
 }
 void moveToSlow()
 {
-    motor[rightMotor] = rightMotorSpeed - 30;
-    motor[leftMotor] = leftMotorSpeed - 30;
+    motor[rightMotor] = rightMotorSpeed - 20;
+    motor[leftMotor] = leftMotorSpeed - 20;
 }
-void moveAroundSlow()
+void moveAroundSlowRight()
 {
     motor[rightMotor] = -rightMotorSpeed + 20;
     motor[leftMotor] = leftMotorSpeed - 20;
+    wait1Msec(500);
+}
+void moveAroundSlowLeft()
+{
+    motor[rightMotor] = +rightMotorSpeed - 20;
+    motor[leftMotor] = -leftMotorSpeed + 20;
+    wait1Msec(500);
 }
 void moveBack()
 {
@@ -53,6 +60,7 @@ void moveBack60()
     motor[rightMotor] = -rightMotorSpeed;
     motor[leftMotor] = -leftMotorSpeed;
     wait1Msec(1000);
+    Stop();
 }
 void Stop()
 {
@@ -83,6 +91,33 @@ int min(int a, int b)
 //    motor[upperMotor] = -motorSpeed;
 //    wait1Msec(timeConstant);
 //}
+int smallestSignal(int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive)
+{
+    int smallest = SignalThree;
+
+    if (SignalOne <= smallest)
+    {
+        smallest = SignalTwo;
+    }
+
+    if (SignalTwo <= smallest)
+    {
+        smallest = SignalThree;
+    }
+
+    if (SignalFour <= smallest)
+    {
+        smallest = SignalFour;
+    }
+
+    if (SignalFive <= smallest)
+    {
+        smallest = SignalFive;
+    }
+
+    return smallest;
+}
+
 task main()
 {
     int sensorValue1 = 0;
@@ -111,7 +146,8 @@ task main()
                 }
             }
             // move to target till off path
-            while (((SensorValue[SonarIn] > 60) && (SensorValue[SonarIn] != -1)))
+            while ((((SensorValue[SonarIn] > 60) && (SensorValue[SonarIn] != -1))))
+            //||((SensorValue[LimitSwitchR] == 0) || (SensorValue[LimitSwitchL] == 0))
             {
                 moveTo();
             }
@@ -119,27 +155,80 @@ task main()
             wait1Msec(1000);
             while (1 == 1) // re-align
             {
-                moveAroundSlow();
+                // take signal 0
                 sensorValue1 = SensorValue[infraC];
                 wait1Msec(51);
                 sensorValue2 = SensorValue[infraC];
-                int signal = min(sensorValue1, sensorValue2);
-                if (signal < 400)
+                int signalMain = min(sensorValue1, sensorValue2);
+
+                // take signal -1
+                moveAroundSlowRight();
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signalRightOne = min(sensorValue1, sensorValue2);
+
+                // take signal -2
+                moveAroundSlowRight();
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signalRightTwo = min(sensorValue1, sensorValue2);
+
+                // take signal 1
+                moveAroundSlowLeft();
+                moveAroundSlowLeft();
+                moveAroundSlowLeft();
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signalLeftOne = min(sensorValue1, sensorValue2);
+
+                // take signal 2
+                moveAroundSlowLeft();
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signalLeftTwo = min(sensorValue1, sensorValue2);
+
+                // now move to 0
+                moveAroundSlowRight();
+                moveAroundSlowRight();
+
+                // calculate the smallest signal
+                int signal = smallestSignal(signalRightOne, signalRightTwo, signalMain, signalLeftOne, signalLeftTwo);
+                if (signal == signalRightOne)
                 {
-                    SensorValue(RedLED) = ON;
-                    Stop();
+                    moveAroundSlowRight();
                     break;
                 }
-                else
+                if (signal == signalRightTwo)
                 {
-                    SensorValue(RedLED) = OFF;
+                    moveAroundSlowRight();
+                    moveAroundSlowRight();
+                    break;
                 }
-            }\
+                if (signal == signalLeftOne)
+                {
+                    moveAroundSlowLeft();
+                    break;
+                }
+                if (signal == signalLeftTwo)
+                {
+                    moveAroundSlowLeft();
+                    moveAroundSlowLeft();
+                    break;
+                }
+                if (signal == signalMain)
+                {
+                    break;
+                }
+            }
             while (1 == 1) // go to target
             {
                 moveToSlow();
                 int sensorValue1 = SensorValue[SonarIn];
-                if ((sensorValue1 <= 4) && (sensorValue1 != -1))
+                if ((sensorValue1 <= 3) && (sensorValue1 != -1))
                 {
                     Stop();
                     break;
@@ -148,6 +237,7 @@ task main()
             objectPlacement();
             wait1Msec(500);
             moveBack60();
+            Stop();
             SensorValue(RedLED) = ON;
         }
     }

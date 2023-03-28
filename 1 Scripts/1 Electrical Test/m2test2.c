@@ -18,43 +18,76 @@ int OFF = 0; // Light Source ON
 int ON = 1;  // Light Source OFF
 
 // bool stopped = false;
-
+void DistanceDetection()
+{
+	while (1 == 1)
+	{
+		SensorValue(RedLED) = ON;
+		wait1Msec(1000);
+		SensorValue(RedLED) = OFF;
+		wait1Msec(1000);
+		SensorValue(RedLED) = ON;
+		wait1Msec(1000);
+		SensorValue(RedLED) = OFF;
+		wait1Msec(1000);
+		if (SensorValue[StartButton] == 0)
+		{
+			break;
+		}
+	}
+	return;
+}
 void Stop()
 {
-    motor[leftMotor] = 0;
-    motor[rightMotor] = 0;
+	motor[leftMotor] = 0;
+	motor[rightMotor] = 0;
 }
 void moveAround()
 {
-    motor[leftMotor] = rightMotorSpeed;
-    motor[rightMotor] = leftMotorSpeed;
+	motor[leftMotor] = rightMotorSpeed;
+	motor[rightMotor] = leftMotorSpeed;
 }
 task main()
 {
-    while (1 == 1)
-    {
-        SensorValue(RedLED) = ON;
-        //SensorValue(GreenLED) = ON;
-        if (SensorValue[StartButton] == 0)
-        {
-        		SensorValue(RedLED) = OFF ;
-            int sensorValue1 = 0;
-            int sensorValue2 = 0;
-            while (1 == 1)
-            {
-                sensorValue1 = SensorValue[infraC];
-                wait1Msec(50);
-                sensorValue2 = SensorValue[infraC];
-                if ((sensorValue1 < 200)||(sensorValue2 < 200))
-                {
-                    SensorValue(RedLED) = ON;
-                    //break;
-                }
-                else
-                {
-                    SensorValue(RedLED) = OFF;
-                }
-            }
-        }
-    }
+	while (1 == 1)
+	{
+		//SensorValue(RedLED) = OFF;
+		//SensorValue(GreenLED) = ON;
+		if (SensorValue[StartButton] == 0)
+		{
+			SensorValue(RedLED) = OFF ;
+			int sensorValue1 = 0;
+			int sensorValue2 = 0;
+			while (1 == 1)
+			{
+				sensorValue1 = SensorValue[infraC];
+				wait1Msec(50);
+				sensorValue2 = SensorValue[infraC];
+				if ((sensorValue1< thresholdSensorValue)||(sensorValue2< thresholdSensorValue))
+				{
+					SensorValue(RedLED) = ON;
+				}
+				else
+				{
+					SensorValue(RedLED) = OFF;
+				}
+				while ((sensorValue1 < 100)||(sensorValue2 < 100))
+				{
+					SensorValue(RedLED) = ON;
+					wait1Msec(500);
+					SensorValue(RedLED) = OFF;
+					wait1Msec(500);
+					//SensorValue(RedLED) = ON;
+					//wait1Msec(500);
+					//SensorValue(RedLED) = OFF;
+					//wait1Msec(500);
+					//DistanceDetection();
+					//break;
+				sensorValue1 = SensorValue[infraC];
+				wait1Msec(50);
+				sensorValue2 = SensorValue[infraC];
+				}
+			}
+		}
+	}
 }
