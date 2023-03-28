@@ -33,10 +33,26 @@ void moveTo()
     motor[rightMotor] = rightMotorSpeed;
     motor[leftMotor] = leftMotorSpeed;
 }
+void moveToSlow()
+{
+    motor[rightMotor] = rightMotorSpeed - 30;
+    motor[leftMotor] = leftMotorSpeed - 30;
+}
+void moveAroundSlow()
+{
+    motor[rightMotor] = -rightMotorSpeed + 20;
+    motor[leftMotor] = leftMotorSpeed - 20;
+}
 void moveBack()
 {
     motor[rightMotor] = -rightMotorSpeed;
     motor[leftMotor] = -leftMotorSpeed;
+}
+void moveBack60()
+{
+    motor[rightMotor] = -rightMotorSpeed;
+    motor[leftMotor] = -leftMotorSpeed;
+    wait1Msec(1000);
 }
 void Stop()
 {
@@ -46,57 +62,93 @@ void Stop()
 void objectPlacement()
 {
     /*MAIN*/
-    motor[upperMotor] = motorSpeed;
-    wait1Msec(timeConstant);
+    motor[upperMotor] = -20;
+    wait1Msec(500);
+    motor[upperMotor] = 0;
 }
-
-//void objectPlacementReverse()
+int min(int a, int b)
+{
+    if (a < b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+// void objectPlacementReverse()
 //{
-    /*MAIN*/
+/*MAIN*/
 //    motor[upperMotor] = -motorSpeed;
 //    wait1Msec(timeConstant);
-}
+//}
 task main()
 {
+    int sensorValue1 = 0;
+    int sensorValue2 = 0;
+    int sensorValue3 = 0;
+    int sensorValue4 = 0;
     while (1 == 1)
     {
         if (SensorValue[StartButton] == 0)
         {
-            // clearTimer(T1);
-            while (1 == 1)
+            while (1 == 1) // spin around find target
             {
-                // if (time1[T1] >= 3000)
-                //{
-                // clearTimer(T1); // Time is 0 now
-                while (1==1)
+                moveAround();
+                int sensorValue1 = 0;
+                int sensorValue2 = 0;
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signal = min(sensorValue1, sensorValue2);
+                if (signal < thresholdSensorValue)
                 {
-                    moveAround();
-                    if (SensorValue[infraC] < thresholdSensorValue)
-                    {
-                        Stop();
-                        SensorValue(RedLED) = ON;
-                        break;
-                    }
-                    if (((SensorValue[SonarIn] <= 20) && (SensorValue[SonarIn] != -1))||((SensorValue[LimitSwitchR] == 0) || (SensorValue[LimitSwitchL] == 0)))
-                    {
-                        moveBack();
-                        wait1Msec(1000);
-                        moveAround();
-                        wait1Msec(500);
-                    }
+                    // SensorValue(RedLED) = ON;
+                    Stop();
+                    wait1Msec(1000); // test
+                    break;
                 }
-                while (1==1)
-                {
-                    moveTo();
-                    if (((SensorValue[SonarIn] <= 20) && (SensorValue[SonarIn] != -1)) || ((SensorValue[LimitSwitchR] == 0) || (SensorValue[LimitSwitchL] == 0)))
-                    {
-                        objectPlacement();
-                    }
-
-                }
-                // clearTimer(T1); // Time is 0 now
-                //}
             }
+            // move to target till off path
+            while (((SensorValue[SonarIn] > 60) && (SensorValue[SonarIn] != -1)))
+            {
+                moveTo();
+            }
+            Stop();
+            wait1Msec(1000);
+            while (1 == 1) // re-align
+            {
+                moveAroundSlow();
+                sensorValue1 = SensorValue[infraC];
+                wait1Msec(51);
+                sensorValue2 = SensorValue[infraC];
+                int signal = min(sensorValue1, sensorValue2);
+                if (signal < 400)
+                {
+                    SensorValue(RedLED) = ON;
+                    Stop();
+                    break;
+                }
+                else
+                {
+                    SensorValue(RedLED) = OFF;
+                }
+            }\
+            while (1 == 1) // go to target
+            {
+                moveToSlow();
+                int sensorValue1 = SensorValue[SonarIn];
+                if ((sensorValue1 <= 4) && (sensorValue1 != -1))
+                {
+                    Stop();
+                    break;
+                }
+            }
+            objectPlacement();
+            wait1Msec(500);
+            moveBack60();
+            SensorValue(RedLED) = ON;
         }
     }
 }
