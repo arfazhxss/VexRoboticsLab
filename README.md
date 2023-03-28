@@ -1,6 +1,7 @@
-    .   ENGR120 Design 2: VecRobotics 
-    .   
-    .   Paisley Kerstens, Aleksia Loewen, Arfaz Hussain
+    ENGR120 Design II : VecRobotics 
+    Paisley Kerstens, Aleksia Loewen, Arfaz Hussain
+    Spring 2022, University Of Victoria
+    .
     .   
     .   FILENAME/DIRECTORY                          FILE DESCRIPTION
     .
