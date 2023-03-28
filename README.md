@@ -9,7 +9,6 @@
     .   0\ Resources                                Past Resources
     .   .   Legacy_RobotC_Code_2017
     .   .   RobotC_Tutorial_2017
-    .   .   RobotC Infrared Sensor Program
     .   .   .
     .   .   .
     .   1\ Scripts
