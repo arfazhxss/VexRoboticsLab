@@ -47,13 +47,16 @@ void moveAroundSlowRight()
 {
     motor[rightMotor] = -rightMotorSpeed + 20;
     motor[leftMotor] = leftMotorSpeed - 20;
-    wait1Msec(100);
+    wait1Msec(200);
+    Stop();
 }
 void moveAroundSlowLeft()
 {
     motor[rightMotor] = +rightMotorSpeed - 20;
     motor[leftMotor] = -leftMotorSpeed + 20;
-    wait1Msec(100);
+    wait1Msec(200);
+    Stop();
+
 }
 // void moveAroundSlowRight_OBJ_PLACEMENT()
 // {
@@ -77,14 +80,15 @@ void objectPlacement()
 {
     /*MAIN*/
     motor[upperMotor] = -15;
-    wait1Msec(1500);
+    wait1Msec(4000);
     motor[upperMotor] = 0;
+    wait1Msec(5000);
 }
 void objectPlacementReverse()
 {
     /*MAIN*/
     motor[upperMotor] = 15;
-    wait1Msec(1500);
+    wait1Msec(2000);
     motor[upperMotor] = 0;
 }
 int min(int a, int b)
@@ -99,7 +103,7 @@ int min(int a, int b)
     }
 }
 
-int smallestSignal (int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive, int SignalSix, int SignalSeven, int SignalEight, int SignalNine, int SignalTen)
+int smallestSignal10 (int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive, int SignalSix, int SignalSeven, int SignalEight, int SignalNine, int SignalTen)
 {
     int smallest = SignalOne;
 
@@ -151,6 +155,33 @@ int smallestSignal (int SignalOne, int SignalTwo, int SignalThree, int SignalFou
     return smallest;
 }
 
+int smallestSignal5 (int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive)
+{
+    int smallest = SignalOne;
+
+    if (SignalTwo < smallest)
+    {
+        smallest = SignalTwo;
+    }
+
+    if (SignalThree < smallest)
+    {
+        smallest = SignalThree;
+    }
+
+    if (SignalFour < smallest)
+    {
+        smallest = SignalFour;
+    }
+
+    if (SignalFive < smallest)
+    {
+        smallest = SignalFive;
+    }
+
+    return smallest;
+}
+
 void signalCheck()
 {
     while (1 == 1) // re-align
@@ -189,7 +220,7 @@ void signalCheck()
         sensorValue2 = SensorValue[infraC];
         int signalRightFour = min(sensorValue1, sensorValue2);
 
-        
+
         // take signal -5
         moveAroundSlowRight();
         sensorValue1 = SensorValue[infraC];
@@ -266,7 +297,7 @@ void signalCheck()
         sensorValue1 = SensorValue[infraC];
         wait1Msec(51);
         sensorValue2 = SensorValue[infraC];
-        int signalRightFiveteen = min(sensorValue1, sensorValue2);
+        int signalRightFifteen = min(sensorValue1, sensorValue2);
 
         // take signal -16
         moveAroundSlowRight();
@@ -304,11 +335,11 @@ void signalCheck()
         int signalRightTwenty = min(sensorValue1, sensorValue2);
 
         // take signal 1
-        int countBack = 21;
-        while (countBack!=0) 
+        int countBack = -20;
+        while (countBack!=1)
         {
             moveAroundSlowLeft();
-            countBack--;
+            countBack++;
         }
         sensorValue1 = SensorValue[infraC];
         wait1Msec(51);
@@ -457,7 +488,13 @@ void signalCheck()
         }
 
         // calculate the smallest signal
-        int signal = smallestSignal2(signalMain, signalRightOne, signalRightTwo, signalRightThree, signalRightFour, signalLeftOne, signalLeftTwo, signalLeftThree, signalLeftFour);
+        int signal1 = smallestSignal10 (signalRightOne, signalRightTwo, signalRightThree, signalRightFour, signalRightFive, signalRightSix, signalRightSeven, signalRightEight, signalRightNine, signalRightTen);
+        int signal2 = smallestSignal10 (signalLeftOne, signalLeftTwo, signalLeftThree, signalLeftFour, signalLeftFive, signalLeftSix, signalLeftSeven, signalLeftEight, signalLeftNine, signalLeftTen);
+        int signal3 = smallestSignal10 (signalRightEleven, signalRightTwelve, signalRightThirteen, signalRightFourteen, signalRightFifteen, signalRightSixteen, signalRightSeventeen, signalRightEighteen, signalRightNineteen, signalRightTwenty);
+        int signal4 = smallestSignal10 (signalLeftEleven, signalLeftTwelve, signalLeftThirteen, signalLeftFourteen, signalLeftFifteen, signalLeftSixteen, signalLeftSeventeen, signalLeftEighteen, signalLeftNineteen, signalLeftTwenty);
+        int signal5 = signalMain;
+        int signal = smallestSignal5(signal1, signal2,signal3, signal4, signal5);
+
         if (signal == signalRightOne)
         {
             moveAroundSlowRight();
@@ -482,6 +519,166 @@ void signalCheck()
             moveAroundSlowRight();
             moveAroundSlowRight();
             moveAroundSlowRight();
+            break;
+        }
+        if (signal == signalRightFive)
+        {
+            countBack=0;
+            while (countBack!=5)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightSix)
+        {
+            countBack = 0;
+            while (countBack != 6)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightSeven)
+        {
+            countBack = 0;
+            while (countBack != 7)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightEight)
+        {
+            countBack = 0;
+            while (countBack != 8)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightNine)
+        {
+            countBack = 0;
+            while (countBack != 9)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightTen)
+        {
+            countBack = 0;
+            while (countBack != 10)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightEleven)
+        {
+            countBack = 0;
+            while (countBack != 11)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightTwelve)
+        {
+            countBack = 0;
+            while (countBack != 12)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightThirteen)
+        {
+            countBack = 0;
+            while (countBack != 13)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightFourteen)
+        {
+            countBack = 0;
+            while (countBack != 14)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightFifteen)
+        {
+            countBack = 0;
+            while (countBack != 15)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightSixteen)
+        {
+            countBack = 0;
+            while (countBack != 16)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightSeventeen)
+        {
+            countBack = 0;
+            while (countBack != 17)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightEighteen)
+        {
+            countBack = 0;
+            while (countBack != 18)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightNineteen)
+        {
+            countBack = 0;
+            while (countBack != 19)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalRightTwenty)
+        {
+            countBack = 0;
+            while (countBack != 20)
+            {
+                moveAroundSlowRight();
+                countBack++;
+            }
             break;
         }
         if (signal == signalLeftOne)
@@ -510,142 +707,164 @@ void signalCheck()
             moveAroundSlowLeft();
             break;
         }
-        if (signal == signalMain)
+        if (signal == signalLeftFive)
         {
+            countBack = 0;
+            while (countBack != 5)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-    }
-    return;
-}
-
-void signalCheck9()
-{
-    while (1 == 1) // re-align
-    {
-        // take signal 0
-        int sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        int sensorValue2 = SensorValue[infraC];
-        int signalMain = min(sensorValue1, sensorValue2);
-
-        // take signal -1
-        moveAroundSlowRight();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalRightOne = min(sensorValue1, sensorValue2);
-
-        // take signal -2
-        moveAroundSlowRight();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalRightTwo = min(sensorValue1, sensorValue2);
-
-        // take signal -3
-        moveAroundSlowRight();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalRightThree = min(sensorValue1, sensorValue2);
-
-        // take signal -4
-        moveAroundSlowRight();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalRightFour = min(sensorValue1, sensorValue2);
-
-        // take signal 1
-        moveAroundSlowLeft();
-        moveAroundSlowLeft();
-        moveAroundSlowLeft();
-        moveAroundSlowLeft();
-        moveAroundSlowLeft();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalLeftOne = min(sensorValue1, sensorValue2);
-
-        // take signal 2
-        moveAroundSlowLeft();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalLeftTwo = min(sensorValue1, sensorValue2);
-
-        // take signal 3
-        moveAroundSlowLeft();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalLeftThree = min(sensorValue1, sensorValue2);
-
-        // take signal 4
-        moveAroundSlowLeft();
-        sensorValue1 = SensorValue[infraC];
-        wait1Msec(51);
-        sensorValue2 = SensorValue[infraC];
-        int signalLeftFour = min(sensorValue1, sensorValue2);
-
-        // now move to 0
-        moveAroundSlowRight();
-        moveAroundSlowRight();
-        moveAroundSlowRight();
-        moveAroundSlowRight();
-
-        // calculate the smallest signal
-        int signal = smallestSignal2(signalMain, signalRightOne, signalRightTwo, signalRightThree, signalRightFour, signalLeftOne, signalLeftTwo, signalLeftThree, signalLeftFour);
-        if (signal == signalRightOne)
+        if (signal == signalLeftSix)
         {
-            moveAroundSlowRight();
+            countBack = 0;
+            while (countBack != 6)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalRightTwo)
+        if (signal == signalLeftSeven)
         {
-            moveAroundSlowRight();
-            moveAroundSlowRight();
+            countBack = 0;
+            while (countBack != 7)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalRightThree)
+        if (signal == signalLeftEight)
         {
-            moveAroundSlowRight();
-            moveAroundSlowRight();
-            moveAroundSlowRight();
+            countBack = 0;
+            while (countBack != 8)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalRightFour)
+        if (signal == signalLeftNine)
         {
-            moveAroundSlowRight();
-            moveAroundSlowRight();
-            moveAroundSlowRight();
-            moveAroundSlowRight();
+            countBack = 0;
+            while (countBack != 9)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalLeftOne)
+        if (signal == signalLeftTen)
         {
-            moveAroundSlowLeft();
+            countBack = 0;
+            while (countBack != 10)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalLeftTwo)
+        if (signal == signalLeftEleven)
         {
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
+            countBack = 0;
+            while (countBack != 11)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalLeftThree)
+        if (signal == signalLeftTwelve)
         {
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
+            countBack = 0;
+            while (countBack != 12)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
-        if (signal == signalLeftFour)
+        if (signal == signalLeftThirteen)
         {
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
-            moveAroundSlowLeft();
+            countBack = 0;
+            while (countBack != 13)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftFourteen)
+        {
+            countBack = 0;
+            while (countBack != 14)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftFifteen)
+        {
+            countBack = 0;
+            while (countBack != 15)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftSixteen)
+        {
+            countBack = 0;
+            while (countBack != 16)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftSeventeen)
+        {
+            countBack = 0;
+            while (countBack != 17)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftEighteen)
+        {
+            countBack = 0;
+            while (countBack != 18)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftNineteen)
+        {
+            countBack = 0;
+            while (countBack != 19)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
+            break;
+        }
+        if (signal == signalLeftTwenty)
+        {
+            countBack = 0;
+            while (countBack != 20)
+            {
+                moveAroundSlowLeft();
+                countBack++;
+            }
             break;
         }
         if (signal == signalMain)
@@ -688,15 +907,31 @@ task main()
             }
             Stop();
             wait1Msec(1000);
-            signalCheck5();
+            signalCheck();
             // move to target till off path
-            while ((SensorValue[SonarIn] > 50) && (SensorValue[SonarIn] != -1))
+            while ((SensorValue[SonarIn] > 30) && (SensorValue[SonarIn] != -1))
             {
                 moveTo();
             }
             Stop();
             wait1Msec(1000);
-            signalCheck9();
+            signalCheck();
+            // int valuesRight[];
+            // for(i=0;i>20; i++)
+            // {
+            //     valuesRight[i]=SensorValue[InfraC];
+            //     moveAroundSlowRight();
+            //     wait1Msec(51);
+            //     Stop();
+            // }
+            // int valuesLeft[];
+            // for (i = 0; i > 20; i++)
+            // {
+            //     valuesLeft[i] = SensorValue[InfraC];
+            //     moveAroundSlowRight();
+            //     wait1Msec(51);
+            //     Stop();
+            // }
             while (1 == 1) // go to target
             {
                 moveToSlow();
