@@ -16,12 +16,12 @@
 const int motorSpeed = 50;
 int rightMotorSpeed = motorSpeed; // Motor Speed
 int leftMotorSpeed = motorSpeed;
-const int thresholdSensorValue = 1000;
+const int thresholdSensorValue = 1090;
 
-//int OFF = 0; // Light Source ON
-int ON = 1;  // Light Source OFF
-//int timeConstant = 1500;
-// bool stopped = false;
+// int OFF = 0; // Light Source ON
+int ON = 1; // Light Source OFF
+// int timeConstant = 1500;
+//  bool stopped = false;
 
 void Stop()
 {
@@ -56,7 +56,6 @@ void moveAroundSlowLeft()
     motor[leftMotor] = -leftMotorSpeed + 20;
     wait1Msec(200);
     Stop();
-
 }
 // void moveAroundSlowRight_OBJ_PLACEMENT()
 // {
@@ -103,7 +102,7 @@ int min(int a, int b)
     }
 }
 
-int smallestSignal10 (int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive, int SignalSix, int SignalSeven, int SignalEight, int SignalNine, int SignalTen)
+int smallestSignal10(int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive, int SignalSix, int SignalSeven, int SignalEight, int SignalNine, int SignalTen)
 {
     int smallest = SignalOne;
 
@@ -155,7 +154,7 @@ int smallestSignal10 (int SignalOne, int SignalTwo, int SignalThree, int SignalF
     return smallest;
 }
 
-int smallestSignal5 (int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive)
+int smallestSignal5(int SignalOne, int SignalTwo, int SignalThree, int SignalFour, int SignalFive)
 {
     int smallest = SignalOne;
 
@@ -220,14 +219,12 @@ void signalCheck()
         sensorValue2 = SensorValue[infraC];
         int signalRightFour = min(sensorValue1, sensorValue2);
 
-
         // take signal -5
         moveAroundSlowRight();
         sensorValue1 = SensorValue[infraC];
         wait1Msec(51);
         sensorValue2 = SensorValue[infraC];
         int signalRightFive = min(sensorValue1, sensorValue2);
-
 
         // take signal -6
         moveAroundSlowRight();
@@ -336,7 +333,7 @@ void signalCheck()
 
         // take signal 1
         int countBack = -20;
-        while (countBack!=1)
+        while (countBack != 1)
         {
             moveAroundSlowLeft();
             countBack++;
@@ -488,12 +485,12 @@ void signalCheck()
         }
 
         // calculate the smallest signal
-        int signal1 = smallestSignal10 (signalRightOne, signalRightTwo, signalRightThree, signalRightFour, signalRightFive, signalRightSix, signalRightSeven, signalRightEight, signalRightNine, signalRightTen);
-        int signal2 = smallestSignal10 (signalLeftOne, signalLeftTwo, signalLeftThree, signalLeftFour, signalLeftFive, signalLeftSix, signalLeftSeven, signalLeftEight, signalLeftNine, signalLeftTen);
-        int signal3 = smallestSignal10 (signalRightEleven, signalRightTwelve, signalRightThirteen, signalRightFourteen, signalRightFifteen, signalRightSixteen, signalRightSeventeen, signalRightEighteen, signalRightNineteen, signalRightTwenty);
-        int signal4 = smallestSignal10 (signalLeftEleven, signalLeftTwelve, signalLeftThirteen, signalLeftFourteen, signalLeftFifteen, signalLeftSixteen, signalLeftSeventeen, signalLeftEighteen, signalLeftNineteen, signalLeftTwenty);
+        int signal1 = smallestSignal10(signalRightOne, signalRightTwo, signalRightThree, signalRightFour, signalRightFive, signalRightSix, signalRightSeven, signalRightEight, signalRightNine, signalRightTen);
+        int signal2 = smallestSignal10(signalLeftOne, signalLeftTwo, signalLeftThree, signalLeftFour, signalLeftFive, signalLeftSix, signalLeftSeven, signalLeftEight, signalLeftNine, signalLeftTen);
+        int signal3 = smallestSignal10(signalRightEleven, signalRightTwelve, signalRightThirteen, signalRightFourteen, signalRightFifteen, signalRightSixteen, signalRightSeventeen, signalRightEighteen, signalRightNineteen, signalRightTwenty);
+        int signal4 = smallestSignal10(signalLeftEleven, signalLeftTwelve, signalLeftThirteen, signalLeftFourteen, signalLeftFifteen, signalLeftSixteen, signalLeftSeventeen, signalLeftEighteen, signalLeftNineteen, signalLeftTwenty);
         int signal5 = signalMain;
-        int signal = smallestSignal5(signal1, signal2,signal3, signal4, signal5);
+        int signal = smallestSignal5(signal1, signal2, signal3, signal4, signal5);
 
         if (signal == signalRightOne)
         {
@@ -523,8 +520,8 @@ void signalCheck()
         }
         if (signal == signalRightFive)
         {
-            countBack=0;
-            while (countBack!=5)
+            countBack = 0;
+            while (countBack != 5)
             {
                 moveAroundSlowRight();
                 countBack++;
@@ -874,6 +871,11 @@ void signalCheck()
     }
     return;
 }
+void moveBack()
+{
+    motor[rightMotor] = -rightMotorSpeed;
+    motor[leftMotor] = leftMotorSpeed;
+}
 
 task main()
 {
@@ -894,11 +896,42 @@ task main()
                 int signal = min(sensorValue1, sensorValue2);
                 if (signal < thresholdSensorValue)
                 {
-                    // SensorValue(RedLED) = ON;
+                    SensorValue(RedLED) = ON;
                     Stop();
                     wait1Msec(1000); // test
                     break;
                 }
+                // if (SensorValue[StopButton] == 0)
+                // {
+                //     Stop();
+                //     return;
+                // }
+                // if (time1[T1] >= 3000)
+                // {
+                //     clearTimer(T1);
+                //     while (time1[T1] <= 1000)
+                //     {
+                //         moveTo();
+                //         if ((SensorValue[SonarIn] <= 50) && (SensorValue[SonarIn] != -1))
+                //         {
+                //             moveBack();
+                //             wait1Msec(50);
+                //         }
+                //     }
+                //     clearTimer(T1);
+                // }
+                // else if (SensorValue[SonarIn] > 30)
+                // {
+                //     moveAround();
+                // }
+                // else if ((SensorValue[SonarIn] <= 20) && (SensorValue[SonarIn] != -1))
+                // {
+                //     moveBack();
+                // }
+                // else if ((SensorValue[LimitSwitchR] == 0) || (SensorValue[LimitSwitchR] == 0))
+                // {
+                //     moveBack();
+                // }
             }
             // move to target till off path
             while ((((SensorValue[SonarIn] > 80) && (SensorValue[SonarIn] != -1))))
@@ -942,7 +975,7 @@ task main()
                     break;
                 }
             }
-            //moveAroundSlowRight_OBJ_PLACEMENT();
+            // moveAroundSlowRight_OBJ_PLACEMENT();
             objectPlacement();
             objectPlacementReverse();
             Stop();

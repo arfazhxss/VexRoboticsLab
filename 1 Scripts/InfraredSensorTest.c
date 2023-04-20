@@ -134,13 +134,6 @@ void lookingForSource()
 	AllOff();
 	while (1 == 1)
 	{
-		// if (SensorValue[infraC] < thresholdSensorValue)
-		// {
-		// 	Stop();
-		// 	AllOn();
-		// 	//SensorValue(RedLED) = ON;
-		// 	return;
-		// }
 		if (SensorValue[StopButton] == 0)
 		{
 			Stop();
