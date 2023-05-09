@@ -1,6 +1,11 @@
     ENGR120 Design II : VexRobotics 
     Paisley Kerstens, Aleksia Loewen, Arfaz Hussain
     Spring 2022, University Of Victoria
+    
+
+    https://user-images.githubusercontent.com/84450659/237013506-dfff451c-4819-4770-a55f-265a7dff83a3.mp4
+
+
     .
     .   
     .   FILENAME/DIRECTORY                          FILE DESCRIPTION
