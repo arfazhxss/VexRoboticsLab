@@ -25,6 +25,34 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 | `InfraredSensorTest.c`       | Final test for IR sensors and light source detection with LED feedback.                                                                         |
 | `robot.c`                    | Final demonstration code, integrating all mechanical and electrical tests into a single program.                                                 |
 
+## Project Structure
+```
+├── init.sh
+├── README.md
+├── route.sh
+├── 0 Resources/
+│   ├── .DS_Store
+│   ├── 1 Robot C Tutorial_2017.pdf
+│   ├── 0 robotc-legacy_code-aly.c
+├── 1 Scripts/
+│   ├── InfraredSensorTest.c
+│   ├── 2 Final Demonstration/
+│   │   ├── FinalDemonstrationG5.c
+│   │   ├── Final Demo FMS & Cost-1.png
+│   │   ├── Final Demo FMS & Cost-2.png
+│   │   ├── finaldemo.c
+│   ├── 0 Mechanical Test/
+│   │   ├── milestone_one_objplacement.c
+│   │   ├── milestone_one.c
+│   ├── 1 Electrical Test/
+│   │   ├── .DS_Store
+│   │   ├── Circuit Diagram.pdf
+│   │   ├── m2test3.c
+│   │   ├── Circuit Diagram-1.png
+│   │   ├── m2test2.c
+│   │   ├── m2test1.c
+```
+
 ## Milestone Programs
 
 ### 1. `milestone_one.c`: Mechanical Test
@@ -147,31 +175,3 @@ This project demonstrates the integration of mechanical and electrical systems u
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Project Structure
-```
-├── init.sh
-├── README.md
-├── route.sh
-├── 0 Resources/
-│   ├── .DS_Store
-│   ├── 1 Robot C Tutorial_2017.pdf
-│   ├── 0 robotc-legacy_code-aly.c
-├── 1 Scripts/
-│   ├── InfraredSensorTest.c
-│   ├── 2 Final Demonstration/
-│   │   ├── FinalDemonstrationG5.c
-│   │   ├── Final Demo FMS & Cost-1.png
-│   │   ├── Final Demo FMS & Cost-2.png
-│   │   ├── finaldemo.c
-│   ├── 0 Mechanical Test/
-│   │   ├── milestone_one_objplacement.c
-│   │   ├── milestone_one.c
-│   ├── 1 Electrical Test/
-│   │   ├── .DS_Store
-│   │   ├── Circuit Diagram.pdf
-│   │   ├── m2test3.c
-│   │   ├── Circuit Diagram-1.png
-│   │   ├── m2test2.c
-│   │   ├── m2test1.c
-```
