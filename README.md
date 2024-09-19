@@ -3,17 +3,14 @@
 
 This repository contains the RobotC programs developed for the **VEX Robotics Project** as part of the **ENGR120 Design II: Vex Robotics** course at the University of Victoria. The project focused on designing and programming a VEX robot capable of performing various tasks, including mechanical, electrical, and sensor-based operations.
 
----
-
 ## Project Details
+```
     ENGR120 Design II : VexRobotics 
     Paisley Kerstens, Aleksia Loewen, Arfaz Hussain
     Spring 2022, University Of Victoria
-    
+``` 
 
    https://user-images.githubusercontent.com/84450659/237013506-dfff451c-4819-4770-a55f-265a7dff83a3.mp4
-
----
 
 ## Robot Files
 
@@ -27,8 +24,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 | `m2test3.c`                  | Integrates sonar sensors and limit switches for obstacle detection and avoidance.                                                                |
 | `InfraredSensorTest.c`       | Final test for IR sensors and light source detection with LED feedback.                                                                         |
 | `robot.c`                    | Final demonstration code, integrating all mechanical and electrical tests into a single program.                                                 |
-
----
 
 ## Milestone Programs
 
@@ -44,8 +39,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
   - Press `buttonToMove` to move forward.
   - Press `buttonToTurn` to rotate right.
 
----
-
 ### 2. `milestone_one_objplacement.c`: Object Placement Test
 
 **Objective**: Test object placement capabilities using an upper motor.
@@ -57,8 +50,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 - **Control Logic**:
   - Press `buttonMain` to place the object.
   - Press `buttonReverse` to reverse the placement mechanism.
-
----
 
 ### 3. `m2test1.c`: Electrical Test 1 - IR Sensor Test
 
@@ -73,8 +64,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 - **Control Logic**:
   - The robot moves until an object is detected (sensor value < threshold), at which point it stops and triggers an LED signal.
 
----
-
 ### 4. `m2test2.c`: Electrical Test 2 - Enhanced IR Detection
 
 **Objective**: Enhance object detection using IR sensors and provide visual feedback with LEDs.
@@ -87,8 +76,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 - **Control Logic**:
   - When an object is detected (sensor value < threshold), the robot stops and blinks the red LED as feedback.
 
----
-
 ### 5. `m2test3.c`: Electrical Test 3 - Sonar and Limit Switch Detection
 
 **Objective**: Use sonar sensors and limit switches for obstacle detection and avoidance.
@@ -100,8 +87,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 
 - **Control Logic**:
   - The robot approaches a target until it detects an object within 20 cm or triggers a limit switch, causing it to back up and adjust course.
-
----
 
 ### 6. `InfraredSensorTest.c`: Final Signal Test
 
@@ -117,8 +102,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 - **Control Logic**:
   - The robot scans for a light source and moves toward it. Upon detecting an object within 5 cm, it stops, and the green LED signals success.
 
----
-
 ### 7. `robot.c`: Final Demonstration Code
 
 **Objective**: Combine all mechanical and electrical functionalities into a single program for the final demonstration.
@@ -129,8 +112,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
   - Full movement capabilities (forward, backward, turning).
   - LED feedback for visual signaling.
   - Obstacle avoidance using sonar and limit switches.
-
----
 
 ## Installation and Usage
 
@@ -146,8 +127,6 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 4. **Run the Tests**:
    - Test each milestone individually to verify functionality before running the final demonstration code (`robot.c`).
 
----
-
 ## Hardware and Software Requirements
 
 ### Hardware
@@ -161,15 +140,38 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 - RobotC IDE (compatible with VEX Robotics kits)
 - Git for version control
 
----
-
 ## Final Demonstration
 
 This project demonstrates the integration of mechanical and electrical systems using a VEX robotics platform. The final robot successfully performs tasks such as movement, object detection, and placement, obstacle avoidance, and visual signaling. Each milestone contributed to refining the robot’s functionality and ensured that the project goals were met.
 
----
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Project Structure
+```
+├── init.sh
+├── README.md
+├── route.sh
+├── 0 Resources/
+│   ├── .DS_Store
+│   ├── 1 Robot C Tutorial_2017.pdf
+│   ├── 0 robotc-legacy_code-aly.c
+├── 1 Scripts/
+│   ├── InfraredSensorTest.c
+│   ├── 2 Final Demonstration/
+│   │   ├── FinalDemonstrationG5.c
+│   │   ├── Final Demo FMS & Cost-1.png
+│   │   ├── Final Demo FMS & Cost-2.png
+│   │   ├── finaldemo.c
+│   ├── 0 Mechanical Test/
+│   │   ├── milestone_one_objplacement.c
+│   │   ├── milestone_one.c
+│   ├── 1 Electrical Test/
+│   │   ├── .DS_Store
+│   │   ├── Circuit Diagram.pdf
+│   │   ├── m2test3.c
+│   │   ├── Circuit Diagram-1.png
+│   │   ├── m2test2.c
+│   │   ├── m2test1.c
 ```
