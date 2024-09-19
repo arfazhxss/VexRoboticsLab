@@ -1,4 +1,4 @@
-# VEX Robotics Project: RobotC Documentation
+# VEX Robotics Project: RobotC
 ## Overview
 
 This repository contains the RobotC programs developed for the **VEX Robotics Project** as part of the **ENGR120 Design II: Vex Robotics** course at the University of Victoria. The project focused on designing and programming a VEX robot capable of performing various tasks, including mechanical, electrical, and sensor-based operations.
@@ -171,7 +171,3 @@ This repository contains the RobotC programs developed for the **VEX Robotics Pr
 ## Final Demonstration
 
 This project demonstrates the integration of mechanical and electrical systems using a VEX robotics platform. The final robot successfully performs tasks such as movement, object detection, and placement, obstacle avoidance, and visual signaling. Each milestone contributed to refining the robot’s functionality and ensured that the project goals were met.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
